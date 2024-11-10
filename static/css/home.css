@@ -1,0 +1,93 @@
+/* for sections */
+.section {
+    padding: 40px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* for home */
+#home {
+    text-align: center;
+}
+
+#home img {
+    height: 300px;
+    width: auto;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+#home h1,
+#home .dashboard-title {
+    font-family: 'Lily Script One', cursive;
+    color: #4EA93C;
+    margin: 0;
+}
+
+#home h1 {
+    font-size: 60px;
+}
+
+#home p {
+    font-family: 'Fuzzy Bubbles', sans-serif;
+    color: #16BBB5;
+    font-size: 48px;
+    margin: 0;
+}
+
+#home .dashboard {
+    margin-top: 50px;
+    padding: 10px 30px;
+    background-color: #C2D6C5;
+    border-radius: 30px;
+}
+
+.update-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#home .update-content img {
+    width: 200px;
+    height: auto;
+}
+
+#home .update-content p {
+    font-size: 30px;
+}
+
+@media screen and (max-width: 600px) {
+    #home h1 {
+        font-size: 20px;
+        margin: 5px;
+    }
+
+    #home p {
+        font-size: 16px;
+    }
+
+    #home img {
+        height: 200px;
+    }
+
+    .dashboard-title {
+        font-size: 20px;
+    }
+
+    .update-content {
+        gap: 10px;
+    }
+
+    #home .update-content img {
+        width: 50px;
+    }
+
+    #home .update-content p {
+        font-size: 16px;
+    }
+}

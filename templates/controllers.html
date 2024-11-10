@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}SSA - Home{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/controllers.css') }}">{% endblock %}
+{% block content %}
+<div id="controls" class="section">
+    <h1>Controllers</h1>
+    <div class="control-card" id="water-control">
+        <img class="control-img" src="{{ url_for('static', filename='images/water_pump.png') }}"
+            alt="Water Pump Icon" />
+        <span class="control-info">
+            <p>Water Pump: <strong>Off</strong></p>
+            <label class="switch">
+                <input type="checkbox" id="toggleWaterPump" onclick="toggleWaterPump()">
+                <span class="slider"></span>
+            </label>
+        </span>
+    </div>
+    <div class="control-card" id="fertilizer-control">
+        <img class="control-img" src="{{ url_for('static', filename='images/fertilizer_pump.png') }}"
+            alt="Fertilizer Pump Icon" />
+        <span class="control-info">
+            <p>Fertilizer Pump: <strong>Off</strong></p>
+            <label class="switch">
+                <input type="checkbox" id="toggleFertilizerPump" onclick="toggleFertilizerPump()">
+                <span class="slider"></span>
+            </label>
+        </span>
+    </div>
+    <div class="control-card" id="roof-control">
+        <img class="control-img" src="{{ url_for('static', filename='images/roof.png') }}" alt="Roof Icon" />
+        <span class="control-info">
+            <p>Roof: <strong>Closed</strong></p>
+            <label class="switch">
+                <input type="checkbox" id="toggleRoof" onclick="toggleRoof()">
+                <span class="slider"></span>
+            </label>
+        </span>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/controllers.js')}}"></script>{% endblock %}

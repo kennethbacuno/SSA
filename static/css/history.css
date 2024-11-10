@@ -1,0 +1,311 @@
+.section {
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding-bottom: 60px;
+}
+
+.section h1 {
+    font-size: 60px;
+    font-family: 'Fuzzy Bubbles', sans-serif;
+    color: #4EA93C;
+    margin: 0;
+    text-align: center;
+}
+
+.bottom-navbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #C2D6C5;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.nav-icon img {
+    width: auto;
+    height: 50px;
+    object-fit: cover;
+}
+
+.nav-icon img:hover {
+    opacity: 0.7;
+}
+
+/* Responsive adjustments for smaller devices */
+@media screen and (max-width: 600px) {
+    .section {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .section h1 {
+        font-size: 30px;
+        margin: 5px;
+    }
+
+    .form-container {
+        width: 90%;
+        padding: 15px;
+        margin: auto;
+    }
+
+    .form-container h1 {
+        font-size: 24px;
+    }
+
+    button {
+        width: 100%;
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .section {
+        padding: 10px;
+    }
+
+    .section h1 {
+        font-size: 24px;
+    }
+
+    .form-container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    select,
+    button {
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+}
+
+.form-container {
+    background-color: #ffffff;
+    border: 2px solid #4caf50;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    margin: auto;
+}
+
+h1 {
+    color: #4caf50;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #4caf50;
+    border-radius: 5px;
+    background-color: #f1f8e9;
+    color: #333;
+}
+
+button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #388e3c;
+}
+
+input[type="number"] {
+    background-color: #f1f8e9;
+    border: 2px solid #4caf50;
+    border-radius: 5px;
+    color: #333;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="number"]::placeholder {
+    color: #666;
+    opacity: 0.7;
+}
+
+input[type="number"]:hover {
+    background-color: #e8f5e9;
+}
+
+input[type="number"]:focus {
+    border-color: #388e3c;
+    box-shadow: 0 0 5px rgba(56, 142, 60, 0.5);
+}
+
+input[type="date"] {
+    background-color: #f1f8e9;
+    border: 2px solid #4caf50;
+    border-radius: 5px;
+    color: #333;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type="date"]::placeholder {
+    color: #666;
+    opacity: 0.7;
+}
+
+input[type="date"]:hover {
+    background-color: #e8f5e9;
+}
+
+input[type="date"]:focus {
+    border-color: #388e3c;
+    box-shadow: 0 0 5px rgba(56, 142, 60, 0.5);
+}
+
+/* for tables of history */
+.table-container {
+    height: 60vh;
+    width: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 60px;
+}
+
+#npk .design, #harvest .design {
+    font-family: 'Julius Sans One', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    background-color: #16BBB5;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 90%;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#npk h2, #harvest h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.npk-history-table, .harvest-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.npk-history-table th,
+.npk-history-table td, .harvest-history-table th,
+.harvest-history-table td {
+    padding: 12px 15px;
+    text-align: center;
+    color: #333;
+    font-size: 1rem;
+}
+
+.npk-history-table thead th, .harvest-history-table thead th  {
+    background-color: #8fc876;
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.npk-history-table tbody tr:nth-child(even), .harvest-history-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.npk-history-table tbody tr:hover, .harvest-history-table tbody tr:hover {
+    background-color: #e6f5e1;
+}
+
+@media (max-width: 600px) {
+    #npk-history h1, #harvest-history h1 {
+        font-size: 1.5em;
+    }
+
+    .npk-history-table,
+    .npk-history-table thead,
+    .npk-history-table tbody,
+    .npk-history-table th,
+    .npk-history-table td,
+    .npk-history-table tr, .harvest-history-table,
+    .harvest-history-table thead,
+    .harvest-history-table tbody,
+    .harvest-history-table th,
+    .harvest-history-table td,
+    .harvest-history-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .npk-history-table thead tr, .harvest-history-table thead tr {
+        display: none;
+    }
+
+    .npk-history-table tbody tr, .harvest-history-table tbody tr {
+        margin-bottom: 12px;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+    }
+
+    .npk-history-table td, .harvest-history-table td {
+        padding: 8px 10px;
+        text-align: left;
+        font-size: 0.9rem;
+        position: relative;
+        word-wrap: break-word;
+    }
+
+    .npk-history-table td[data-label]:before, .harvest-history-table td[data-label]:before {
+        content: attr(data-label) ": ";
+        font-weight: bold;
+        display: block;
+        color: #4EA93C;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+}
+
+.npk-history-table tbody tr, .harvest-history-table tbody tr {
+    transition: background-color 0.3s ease;
+}

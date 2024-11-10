@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% block title %}SSA - Home{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sensor_updates.css') }}">{% endblock %}
+{% block content %}
+<div class="bottom-navbar">
+    <a onclick="showSection('npk-updates')" class="nav-icon">
+        <img src="{{ url_for('static', filename='images/npk.png') }}" alt="NPK">
+    </a>
+    <a onclick="showSection('sensor-updates')" class="nav-icon">
+        <img src="{{ url_for('static', filename='images/soil_moisture.png') }}" alt="Soil and Water">
+    </a>
+</div>
+<div id="npk-updates" class="section">
+    <h1>NPK Updates</h1>
+    <h2 class="design" id="currentNitro">Current Nitrogen: %NITROGEN%</h2>
+    <div id="chart-nitrogen" class="container"></div>
+    <h2 class="design" id="currentPhos">Current Phosphorus: %PHOSPHORUS%</h2>
+    <div id="chart-phosphorus" class="container"></div>
+    <h2 class="design" id="currentPota">Current Potassium: %POTASSIUM%</h2>
+    <div id="chart-potassium" class="container"></div>
+</div>
+<div id="sensor-updates" class="section" style="display: none;">
+    <h1>Sensor Updates</h1>
+    <h2 class="design" id="currentMoisture">Current Moisture: %MOISTURE%</h2>
+    <div class="legend">
+        <div class="legend-item">
+            <img src="{{ url_for('static', filename='images/wet.png') }}" alt="Wet Icon" class="legend-icon">
+            <span>0-500: Soil is too <strong>wet</strong></span>
+        </div>
+        <div class="legend-item">
+            <img src="{{ url_for('static', filename='images/perfect.png') }}" alt="Perfect Condition Icon"
+                class="legend-icon">
+            <span>501-749: Soil is in <strong>perfect condition</strong></span>
+        </div>
+        <div class="legend-item">
+            <img src="{{ url_for('static', filename='images/dry.png') }}" alt="Dry Icon" class="legend-icon">
+            <span> 750 or greater: Soil is <strong>dry</strong></span>
+        </div>
+    </div>
+    <div id="chart-moisture" class="container"></div>
+    <div class="water-level-update">
+        <img src="{{ url_for('static', filename='images/water_level.png') }}" alt="Water Level Icon">
+        <h2>Water Container Status</h2>
+        <h1 id="water-level"><strong>0%</strong></h1>
+    </div>
+</div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+    var chartT = new Highcharts.Chart({
+        chart: { renderTo: 'chart-nitrogen' },
+        title: {
+            text: 'NPK: Nitrogen',
+            style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                color: '#4EA93C',
+                fontFamily: "'Fuzzy Bubbles', sans-serif"
+            }
+        },
+        series: [{
+            showInLegend: false,
+            data: []
+        }],
+        plotOptions: {
+            line: {
+                animation: false,
+                dataLabels: { enabled: true }
+            },
+            series: { color: '#059e8a' }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                second: '%M:%S',
+                minute: '%H:%M',
+                hour: '%H:%M',
+                day: '%e. %b',
+                week: '%e. %b',
+                month: '%b \'%y',
+                year: '%Y'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Nitrogen (mg/kg)',
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 'light',
+                    color: '#4EA93C',
+                    fontFamily: "'Fuzzy Bubbles', sans-serif"
+                }
+            }
+        },
+        credits: { enabled: false }
+    });
+    async function fetchNitrogen() {
+        try {
+            const response = await fetch('/nitrogen');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            const x = (new Date()).getTime();
+            const y = parseFloat(data.nitrogen);
+
+            if (chartT.series[0].data.length > 40) {
+                chartT.series[0].addPoint([x, y], true, true, true);
+            } else {
+                chartT.series[0].addPoint([x, y], true, false, true);
+            }
+
+            const paragraphElement = document.getElementById("currentNitro");
+            if (paragraphElement) {
+                paragraphElement.textContent = `Current Nitrogen (mg/kg): ${data.nitrogen} mg/kg`;
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    setInterval(fetchNitrogen, 1000);
+
+
+    var chartH = new Highcharts.Chart({
+        chart: { renderTo: 'chart-phosphorus' },
+        title: {
+            text: 'NPK: Phosphorus',
+            style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                color: '#4EA93C',
+                fontFamily: "'Fuzzy Bubbles', sans-serif"
+            }
+        },
+        series: [{
+            showInLegend: false,
+            data: []
+        }],
+        plotOptions: {
+            line: {
+                animation: false,
+                dataLabels: { enabled: true }
+            }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                second: '%M:%S',
+                minute: '%H:%M',
+                hour: '%H:%M',
+                day: '%e. %b',
+                week: '%e. %b',
+                month: '%b \'%y',
+                year: '%Y'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Phosphorus (mg/kg)',
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 'light',
+                    color: '#4EA93C',
+                    fontFamily: "'Fuzzy Bubbles', sans-serif"
+                }
+            }
+        },
+        credits: { enabled: false }
+    });
+    async function fetchPhosphorus() {
+        try {
+            const response = await fetch('/phosphorus');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            const x = (new Date()).getTime();
+            const y = parseFloat(data.phosphorus);
+
+            if (chartH.series[0].data.length > 40) {
+                chartH.series[0].addPoint([x, y], true, true, true);
+            } else {
+                chartH.series[0].addPoint([x, y], true, false, true);
+            }
+
+            const paragraphElement = document.getElementById("currentPhos");
+            if (paragraphElement) {
+                paragraphElement.textContent = `Current Phosphorus (mg/kg): ${data.phosphorus} mg/kg`;
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    setInterval(fetchPhosphorus, 1000);
+
+    var chartP = new Highcharts.Chart({
+        chart: { renderTo: 'chart-potassium' },
+        title: {
+            text: 'NPK: Potassium',
+            style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                color: '#4EA93C',
+                fontFamily: "'Fuzzy Bubbles', sans-serif"
+            }
+        },
+        series: [{
+            showInLegend: false,
+            data: []
+        }],
+        plotOptions: {
+            line: {
+                animation: false,
+                dataLabels: { enabled: true }
+            },
+            series: { color: '#18009c' }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                second: '%M:%S',
+                minute: '%H:%M',
+                hour: '%H:%M',
+                day: '%e. %b',
+                week: '%e. %b',
+                month: '%b \'%y',
+                year: '%Y'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Potassium (mg/kg)',
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 'light',
+                    color: '#4EA93C',
+                    fontFamily: "'Fuzzy Bubbles', sans-serif"
+                }
+            }
+        },
+        credits: { enabled: false }
+    });
+    async function fetchPotassium() {
+        try {
+            const response = await fetch('/potassium');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            const x = (new Date()).getTime();
+            const y = parseFloat(data.potassium);
+
+            if (chartP.series[0].data.length > 40) {
+                chartP.series[0].addPoint([x, y], true, true, true);
+            } else {
+                chartP.series[0].addPoint([x, y], true, false, true);
+            }
+
+            const paragraphElement = document.getElementById("currentPota");
+            if (paragraphElement) {
+                paragraphElement.textContent = `Current Potassium (mg/kg): ${data.potassium} mg/kg`;
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    setInterval(fetchPotassium, 1000);
+
+    var chartMoisture = new Highcharts.Chart({
+        chart: { renderTo: 'chart-moisture' },
+        title: {
+            text: 'Soil Moisture',
+            style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+                color: '#4EA93C',
+                fontFamily: "'Fuzzy Bubbles', sans-serif"
+            }
+        },
+        series: [{
+            showInLegend: false,
+            data: []
+        }],
+        plotOptions: {
+            line: {
+                animation: false,
+                dataLabels: { enabled: true }
+            },
+            series: { color: '#00aaff' }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                second: '%M:%S',
+                minute: '%H:%M',
+                hour: '%H:%M',
+                day: '%e. %b',
+                week: '%e. %b',
+                month: '%b \'%y',
+                year: '%Y'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Soil Moisture',
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 'light',
+                    color: '#4EA93C',
+                    fontFamily: "'Fuzzy Bubbles', sans-serif"
+                }
+            }
+        },
+        credits: { enabled: false }
+    });
+
+    async function fetchSoilMoisture() {
+        try {
+            const response = await fetch('/soil_moisture');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            const x = (new Date()).getTime();
+            const y = parseFloat(data.soil_moisture);
+
+            if (chartMoisture.series[0].data.length > 40) {
+                chartMoisture.series[0].addPoint([x, y], true, true, true);
+            } else {
+                chartMoisture.series[0].addPoint([x, y], true, false, true);
+            }
+
+            const paragraphElement = document.getElementById("currentPota");
+            if (paragraphElement) {
+                paragraphElement.textContent = `Current Soil Moisture: ${data.soil_moisture}`;
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    setInterval(fetchSoilMoisture, 1000);
+</script>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/sensor_updates.js')}}"></script>{% endblock %}

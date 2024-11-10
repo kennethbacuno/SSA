@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block title %}SSA - Home{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">{% endblock %}
+{% block content %}
+<div class="bottom-navbar">
+    <a onclick="showSection('npk')" class="nav-icon">
+        <img src="{{ url_for('static', filename='images/npk_history.png') }}" alt="NPK History">
+    </a>
+    </a>
+    <a onclick="showSection('harvest')" class="nav-icon">
+        <img src="{{ url_for('static', filename='images/harvest_history.png') }}" alt="Harvest History">
+    </a>
+</div>
+<div id="npk" class="section">
+    <h2 class="design">NPK History Chart</h2>
+    <div id="chart-npk-history" class="container"></div>
+    <h2 class="design">NPK Data Log</h2>
+    <div class="table-container">
+        <table class="npk-history-table">
+            <thead>
+                <tr>
+                    <th>Nutrient</th>
+                    <th>N-Value</th>
+                    <th>Nutrient</th>
+                    <th>P-Value</th>
+                    <th>Nutrient</th>
+                    <th>K-Value</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nutrient in npk_data %}
+                <tr>
+                    <td data-label="Nitrogen">{{ nutrient.nitrogen }}</td>
+                    <td data-label="N-Value">{{ nutrient.n_value }}</td>
+                    <td data-label="Phosphorus">{{ nutrient.phosphorus }}</td>
+                    <td data-label="P-Value">{{ nutrient.p_value }}</td>
+                    <td data-label="Potassium">{{ nutrient.potassium }}</td>
+                    <td data-label="K-Value">{{ nutrient.k_value }}</td>
+                    <td data-label="Date">{{ nutrient.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="harvest" class="section" style="display: none;">
+    <div class="form-container">
+        <h1>Insert Harvest Data</h1>
+        <form action="/add_harvest" method="post">
+            <input type="hidden" name="plant">
+            <label for="plant-type">Which plant are you going to harvest?</label>
+            <select id="plant-type" name="plant_type">
+                <option value="Okra">Okra</option>
+                <option value="Kamatis">Kamatis</option>
+                <option value="Petchay">Petchay</option>
+            </select>
+            <label for="value">Quantity:</label>
+            <input type="number" id="value" name="value" min="1" max="100" step="1">
+            <label for="date-harvested">Date Harvested:</label>
+            <input type="date" id="date-harvested" name="date_harvested">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <h2 class="design">Harvest History Chart</h2>
+    <div id="chart-harvest-history" class="container"></div>
+    <h2 class="design">Harvest Data Table</h2>
+    <div class="table-container">
+        <table class="npk-history-table">
+            <thead>
+                <tr>
+                    <th>Plant</th>
+                    <th>Value</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plant in harvest_data %}
+                <tr>
+                    <td data-label="Plant">{{ plant.plant_type }}</td>
+                    <td data-label="Value">{{ plant.quantity }}</td>
+                    <td data-label="Date">{{ plant.date_harvested }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+    var chartNPK = new Highcharts.Chart({
+        chart: { renderTo: 'chart-npk-history', type: 'line' },
+        title: {
+            text: 'NPK Value History',
+            style: { fontSize: '18px', fontWeight: 'bold', color: '#4EA93C', fontFamily: "'Fuzzy Bubbles', sans-serif" }
+        },
+        series: [
+            { name: 'Nitrogen', data: [], color: '#059e8a' },
+            { name: 'Phosphorus', data: [], color: '#f39c12' },
+            { name: 'Potassium', data: [], color: '#e74c3c' }
+        ],
+        plotOptions: {
+            line: { animation: false, dataLabels: { enabled: true } }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { minute: '%H:%M', hour: '%H:%M', day: '%e. %b' }
+        },
+        yAxis: {
+            title: {
+                text: 'Levels (mg/kg)',
+                style: { fontSize: '12px', fontWeight: 'light', color: '#4EA93C', fontFamily: "'Fuzzy Bubbles', sans-serif" }
+            }
+        },
+        credits: { enabled: false }
+    });
+
+    async function fetchNPKData() {
+        try {
+            const response = await fetch('/npk-data');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+
+            // Set the data for each NPK series
+            chartNPK.series[0].setData(data.nitrogen);
+            chartNPK.series[1].setData(data.phosphorus);
+            chartNPK.series[2].setData(data.potassium);
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+
+    fetchNPKData();
+    setInterval(fetchNPKData, 300000);
+
+    var chartHarvest = new Highcharts.Chart({
+        chart: { renderTo: 'chart-harvest-history', type: 'line' },
+        title: {
+            text: 'Harvest History',
+            style: { fontSize: '18px', fontWeight: 'bold', color: '#4EA93C', fontFamily: "'Fuzzy Bubbles', sans-serif" }
+        },
+        series: [
+            { name: 'Okra', data: [], color: '#059e8a' },
+            { name: 'Kamatis', data: [], color: '#f39c12' },
+            { name: 'Petchay', data: [], color: '#e74c3c' }
+        ],
+        plotOptions: {
+            line: { animation: false, dataLabels: { enabled: true } }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { minute: '%H:%M', hour: '%H:%M', day: '%e. %b' }
+        },
+        yAxis: {
+            title: {
+                text: 'Value',
+                style: { fontSize: '12px', fontWeight: 'light', color: '#4EA93C', fontFamily: "'Fuzzy Bubbles', sans-serif" }
+            }
+        },
+        credits: { enabled: false }
+    });
+
+    async function fetchHarvestData() {
+        try {
+            const response = await fetch('/harvest-data');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+
+            // Update the series data with new data from the server
+            chartHarvest.series[0].setData(data.okra);
+            chartHarvest.series[1].setData(data.kamatis);
+            chartHarvest.series[2].setData(data.petchay);
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    // Initial data fetch and set an interval to update
+    fetchHarvestData();
+    setInterval(fetchHarvestData, 5000);
+
+</script>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/history.js')}}"></script>{% endblock %}

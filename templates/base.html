@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="logo_wbg.jpeg">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&family=Lily+Script+One&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Navigation Bar for broader devices like tablets and pcs -->
+    <div class="navbar">
+        <span class="menu-icon" onclick="openNav()">
+            <img src="{{ url_for('static', filename='images/menu.png') }}" alt="Menu Icon" />
+        </span>
+        <a href="#" class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" />
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('sensor_updates') }}">Sensor Updates</a>
+            <a href="{{ url_for('controllers') }}">Controllers</a>
+            <a href="{{ url_for('forecasting') }}">Forecasting</a>
+            <a href="{{ url_for('history') }}">History</a>
+        </div>
+    </div>
+
+    <!-- Side Navigation Dashboard for more compact devices like mobile phones -->
+    <div id="mySideNav" class="sidenav">
+        <span class="closebtn" onclick="closeNav()">
+            <img src="{{ url_for('static', filename='images/close.png') }}" alt="Close Icon" />
+        </span>
+        <div class="card">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Placeholder"
+                class="logo-placeholder">
+        </div>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('sensor_updates') }}">Sensor Updates</a>
+        <a href="{{ url_for('controllers') }}">Controllers</a>
+        <a href="{{ url_for('forecasting') }}">Forecasting</a>
+        <a href="{{ url_for('history') }}">History</a>
+    </div>
+
+    <div class="content">{% block content %}{% endblock %}</div>
+
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

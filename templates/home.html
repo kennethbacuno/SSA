@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}SSA - Home{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">{% endblock %}
+{% block content %}
+<div id="home" class="section">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" />
+    <h1>Sustainable Smart Agriculture</h1>
+    <p>Sprout a smile everyday.</p>
+    <div class="dashboard">
+        <h1>Sensors Dashboard</h1>
+        <h1 class="dashboard-title">NPK Updates</h1>
+        <span class="update-content">
+            <img src="{{ url_for('static', filename='images/npk.png') }}" alt="NPK Icon" />
+            <div class="npk-values">
+                <p id="db-nitrogen">Nitrogen: %NITROGEN%</p>
+                <p id="db-phosphorus">Phosphorus: %PHOSPHORUS%</p>
+                <p id="db-potassium">Potassium: %POTASSIUM%</p>
+            </div>
+        </span>
+        <h1 class="dashboard-title">Soil Moisture Status</h1>
+        <span class="update-content">
+            <img src="{{ url_for('static', filename='images/soil_moisture.png') }}" alt="Soil Moisture Icon" />
+            <p id="db-soil-moisture">Soil Moisture: %SOIL_MOISTURE%</p>
+        </span>
+        <h1 class="dashboard-title">Water Container Status</h1>
+        <span class="update-content">
+            <img src="{{ url_for('static', filename='images/water_level.png') }}" alt="water_level Icon" />
+            <p id="db-water-level">Water Level: %WATER_LEVEL%</p>
+        </span>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{{ url_for('static', filename='js/home.js')}}"></script>{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}SSA - Home{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/forecasting.css') }}">{% endblock %}
+{% block content %}
+<div class="bottom-navbar">
+    <a onclick="showSection('forecast')" class="nav-icon">
+        <img src="{{ url_for('static', filename='images/forecast.png') }}" alt="Forecasting">
+    </a>
+    <a onclick="showSection('form')" class="nav-icon">
+        <img src="{{ url_for('static', filename='images/form.png') }}" alt="Form">
+    </a>
+</div>
+<div id="forecast" class="section">
+    <h1>Sustainable Smart Agriculture Harvest Forecast</h1>
+    <table class="forecast-table">
+        <thead>
+            <tr>
+                <th>Plot Number</th>
+                <th>Plant Type</th>
+                <th>Date Planted</th>
+                <th>Harvest Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plant in plants %}
+            <tr>
+                <td data-label="Plot Number">{{ plant.plot_number }}</td>
+                <td data-label="Plant Type">{{ plant.plant_type }}</td>
+                <td data-label="Date Planted">{{ plant.date_planted }}</td>
+                <td data-label="Harvest Date">{{ plant.harvest_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div id="form" class="section" style="display: none;">
+    <div class="form-container">
+        <h1>Insert Garden Data</h1>
+
+        <form action="/submit" method="post">
+            <input type="hidden" name="plot_number" value="1">
+            <label for="plant-type1">Plot 1. Choose a plant type:</label>
+            <select id="plant-type1" name="plant_type">
+                <option value="Okra">Okra</option>
+                <option value="Kamatis">Kamatis</option>
+                <option value="Petchay">Petchay</option>
+            </select>
+            <label for="date-planted1">Date Planted:</label>
+            <input type="date" id="date-planted1" name="date_planted">
+            <button type="submit">Submit</button>
+        </form>
+
+        <form action="/submit" method="post">
+            <input type="hidden" name="plot_number" value="2">
+            <label for="plant-type2">Plot 2. Choose a plant type:</label>
+            <select id="plant-type2" name="plant_type">
+                <option value="Okra">Okra</option>
+                <option value="Kamatis">Kamatis</option>
+                <option value="Petchay">Petchay</option>
+            </select>
+            <label for="date-planted2">Date Planted:</label>
+            <input type="date" id="date-planted2" name="date_planted">
+            <button type="submit">Submit</button>
+        </form>
+
+        <form action="/submit" method="post">
+            <input type="hidden" name="plot_number" value="3">
+            <label for="plant-type3">Plot 3. Choose a plant type:</label>
+            <select id="plant-type3" name="plant_type">
+                <option value="Okra">Okra</option>
+                <option value="Kamatis">Kamatis</option>
+                <option value="Petchay">Petchay</option>
+            </select>
+            <label for="date-planted3">Date Planted:</label>
+            <input type="date" id="date-planted3" name="date_planted">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/forecasting.js')}}"></script>{% endblock %}

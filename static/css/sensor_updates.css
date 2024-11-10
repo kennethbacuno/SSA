@@ -1,0 +1,136 @@
+.section {
+    padding: 40px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding-bottom: 60px;
+}
+
+.section h1{
+    font-size: 60px;
+    font-family: 'Fuzzy Bubbles', sans-serif;
+    color: #4EA93C;
+    margin: 0;
+    text-align: center;
+}
+
+.bottom-navbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #C2D6C5;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.nav-icon img {
+    width: auto;
+    height: 50px;
+    object-fit: cover;
+}
+.nav-icon img:hover {
+    opacity: 0.7;
+}
+#npk-updates .design {
+    font-family: 'Julius Sans One', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    background-color: #16BBB5;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 90%;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#npk-updates h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+
+    .section h1 {
+        font-size: 30px;
+        margin: 5px;
+    }
+}
+
+#sensor-updates .design {
+    font-family: 'Julius Sans One', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    background-color: #16BBB5;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 90%;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#sensor-updates h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+#sensor-updates .legend {
+    border: 5px solid #16BBB5;
+    padding: 10px;
+    max-width: 300px;
+    background-color: #C2D6C5;
+    border-radius: 20px;
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+#sensor-updates .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#sensor-updates .legend-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.legend-item span strong {
+    color: #d9534f;
+    font-style: italic;
+}
+
+#sensor-updates .water-level-update {
+    border: 5px solid #16BBB5;
+    padding: 10px;
+    max-width: 300px;
+    background-color: #C2D6C5;
+    text-align: center;
+    border-radius: 20px;
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+#sensor-updates .water-level-update img{
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#sensor-updates .water-level-update h2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#sensor-updates .water-level-update h1 strong {
+    color: #d9534f;
+    font-style: italic;
+}
