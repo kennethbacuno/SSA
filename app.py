@@ -200,6 +200,7 @@ def get_nitrogen():
         if response.status_code == 200:
             nitrogen = response.text
             global n
+            n = nitrogen
             return jsonify({"status": "success", "nitrogen": n}), 200
         else:
             return jsonify({"status": "error", "message": "Failed to retrieve nitrogen value"}), 500
@@ -217,6 +218,7 @@ def get_phosphorus():
         if response.status_code == 200:
             phosphorus = response.text
             global p
+            p = phosphorus
             return jsonify({"status": "success", "phosphorus": p}), 200
         else:
             return jsonify({"status": "error", "message": "Failed to retrieve phosphorus value"}), 500
@@ -234,6 +236,7 @@ def get_potassium():
         if response.status_code == 200:
             potassium = response.text
             global k
+            k = potassium
             return jsonify({"status": "success", "potassium": k}), 200
         else:
             return jsonify({"status": "error", "message": "Failed to retrieve potassium value"}), 500
@@ -251,6 +254,7 @@ def get_soil_moisture():
         if response.status_code == 200:
             soil_moisture = response.text
             global sm
+            sm = soil_moisture
             return jsonify({"status": "success", "soil_moisture": sm}), 200
         else:
             return jsonify({"status": "error", "message": "Failed to retrieve soil_moisture value"}), 500
@@ -268,6 +272,7 @@ def get_water_level():
         if response.status_code == 200:
             water_level = response.text
             global wl
+            wl = water_level
             return jsonify({"status": "success", "water_level": wl}), 200
         else:
             return jsonify({"status": "error", "message": "Failed to retrieve water_level value"}), 500
